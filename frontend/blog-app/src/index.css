@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    --font-display: "Urbanist", sans-serif;
+    --breakpoint-3xl: 1920px;
+    --color-primary: #00A7F3;
+}
+
+@layer base {
+    html {
+        font-family: var(--font-display);
+    }
+
+    body {
+        background-color: #f7fafe;
+        color: #1e293b;
+        overflow-x: hidden;
+        transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    html.dark body {
+        background-color: #0b1120;
+        color: #f1f5f9;
+    }
+}
+
+/* Custom scrollbar styling */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.35);
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.w-md-editor {
+    height: 400px !important;
+}
+
+/* Icon button size & spacing */
+.w-md-editor-toolbar li > button {
+    height: 40px !important;
+    font-size: 24px !important;
+    color: #4A5568 !important;
+    padding: 10px !important;
+}
+
+/* Hover effect */
+.w-md-editor-toolbar button:hover {
+    color: #0284c7 !important;
+    background-color: #e0f2fe !important;
+    border-radius: 6px;
+}
+
+/* Active/focused icon style */
+.w-md-editor-toolbar button:focus {
+    outline: none;
+    color: #007A99 !important;
+    background-color: #d0f4ff !important;
+}
+
+/* Markdown editor dark mode override */
+html.dark .w-md-editor {
+    background-color: #0f172a !important;
+    border-color: #334155 !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark .w-md-editor-toolbar {
+    background-color: #1e293b !important;
+    border-bottom: 1px solid #334155 !important;
+}
+
+html.dark .w-md-editor-toolbar li > button {
+    color: #94a3b8 !important;
+}
+
+html.dark .w-md-editor-toolbar button:hover {
+    color: #38bdf8 !important;
+    background-color: #334155 !important;
+}
+
+html.dark .w-md-editor-preview {
+    background-color: #0f172a !important;
+    color: #f1f5f9 !important;
+}
+
+html.dark .w-md-editor-text-pre,
+html.dark .w-md-editor-text-input {
+    color: #f1f5f9 !important;
+}
+
+.input-box {
+    @apply w-full flex justify-between gap-3 text-sm text-slate-800 dark:text-slate-100 bg-gray-50/50 dark:bg-slate-800/80 rounded-xl px-4 py-3 mb-4 mt-3 border border-gray-100 dark:border-slate-700/80 outline-none focus-within:border-sky-400 dark:focus-within:border-sky-500 transition-colors; 
+}
+
+.btn-primary {
+    @apply w-full flex items-center justify-center gap-3 text-sm font-semibold text-white bg-linear-to-r from-sky-500 to-cyan-400 p-[10px] rounded-xl my-1 transition-all hover:scale-[1.01] hover:text-white cursor-pointer shadow-md shadow-sky-500/20;
+}
+
+.btn-small {
+    @apply flex items-center justify-center gap-3 bg-linear-to-r from-sky-500 to-cyan-400 text-sm font-semibold text-white px-7 py-2 rounded-lg hover:bg-black hover:text-white transition-colors cursor-pointer hover:shadow-2xl hover:shadow-sky-200;
+}
+
+.form-card {
+    @apply bg-white dark:bg-slate-900 rounded-xl shadow-gray-50 dark:shadow-none border border-gray-200/50 dark:border-slate-800 transition-colors;
+}
+
+.form-input {
+    @apply w-full text-sm text-slate-800 dark:text-slate-100 outline-none bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-3 py-2.5 rounded-lg mt-2 placeholder:text-gray-400 dark:placeholder:text-slate-500 focus:border-sky-400 dark:focus:border-sky-500 transition-colors;
+}
