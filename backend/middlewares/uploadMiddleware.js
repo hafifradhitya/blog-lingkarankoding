@@ -1,11 +1,19 @@
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
 
-// Pastikan direktori uploads tersedia
-const uploadDir = path.join(__dirname, "../uploads");
-if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir, { recursive: true });
+// Pastikan direktori uploads tersedia (gunakan /tmp di Vercel agar tidak error EROFS)
+const uploadDir = process.env.VERCEL
+    ? path.join(os.tmpdir(), "uploads")
+    : path.join(__dirname, "../uploads");
+
+try {
+    if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+    }
+} catch (err) {
+    console.warn("Gagal membuat folder upload:", err.message);
 }
 
 // Konfigurasi penyimpanan disk multer

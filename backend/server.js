@@ -13,15 +13,31 @@ const aiRoutes = require("./routes/aiRoute");
 
 const app = express();
 
-// Connect Database
-connectDB();
+// Middleware koneksi database (Mendukung reuse connection di serverless Vercel)
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            message: "Koneksi database gagal.",
+            error: err.message,
+        });
+    }
+});
 
 // CORS configuration (Mendukung localhost, domain custom, dan semua deployment Vercel)
 app.use(
     cors({
         origin: (origin, callback) => {
             // Izinkan request tanpa origin (mobile/curl/server-to-server) atau domain yang cocok
-            if (!origin || origin.includes("localhost") || origin.endsWith(".vercel.app") || (process.env.CLIENT_URL && origin.startsWith(process.env.CLIENT_URL))) {
+            if (
+                !origin ||
+                origin.includes("localhost") ||
+                origin.endsWith(".vercel.app") ||
+                (process.env.CLIENT_URL && origin.startsWith(process.env.CLIENT_URL))
+            ) {
                 callback(null, true);
             } else {
                 callback(null, true);
@@ -44,7 +60,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.get("/", (req, res) => {
     res.json({
         success: true,
-        message: "Blog App Backend API is running",
+        message: "Blog App Backend API is running on Vercel Serverless",
         version: "1.0.0",
     });
 });
@@ -100,8 +116,13 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start Server
+// Start Server jika dijalankan lokal (bukan serverless Vercel)
 const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+// Export Express app untuk Vercel Serverless Function
+module.exports = app;
