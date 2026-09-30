@@ -16,11 +16,17 @@ const app = express();
 // Connect Database
 connectDB();
 
-// CORS configuration
-const allowedOrigins = process.env.CLIENT_URL ? [process.env.CLIENT_URL, "http://localhost:5173", "http://localhost:3000"] : "*";
+// CORS configuration (Mendukung localhost, domain custom, dan semua deployment Vercel)
 app.use(
     cors({
-        origin: allowedOrigins,
+        origin: (origin, callback) => {
+            // Izinkan request tanpa origin (mobile/curl/server-to-server) atau domain yang cocok
+            if (!origin || origin.includes("localhost") || origin.endsWith(".vercel.app") || (process.env.CLIENT_URL && origin.startsWith(process.env.CLIENT_URL))) {
+                callback(null, true);
+            } else {
+                callback(null, true);
+            }
+        },
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
