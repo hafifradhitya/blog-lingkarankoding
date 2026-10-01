@@ -40,7 +40,7 @@ const SUGGESTED_TAGS = [
     "Express",
     "MongoDB",
     "Next.js",
-    "Gemini AI",
+    "Artificial Intelligence",
     "Tailwind CSS",
     "JavaScript",
     "TypeScript",

@@ -118,7 +118,7 @@ const SearchPosts = () => {
                                 <LuSearch className="text-gray-400 dark:text-slate-500 text-xl shrink-0" />
                                 <input
                                     type="text"
-                                    placeholder="Ketik kata kunci (contoh: React, JWT, Express, Gemini AI)..."
+                                    placeholder="Ketik kata kunci (contoh: React, JWT, Express, TypeScript)..."
                                     value={keyword}
                                     onChange={(e) => setKeyword(e.target.value)}
                                     className="w-full text-sm text-gray-800 dark:text-slate-100 outline-none placeholder:text-gray-400 dark:placeholder:text-slate-500 py-1.5 bg-transparent"
@@ -148,7 +148,7 @@ const SearchPosts = () => {
                     {/* Quick Search Suggestions */}
                     <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs text-gray-500 dark:text-slate-400">
                         <span>Pencarian populer:</span>
-                        {["MERN", "Authentication", "Tailwind", "Gemini AI", "Next.js", "Docker"].map((item) => (
+                        {["MERN", "Authentication", "Tailwind", "Artificial Intelligence", "Next.js", "Docker"].map((item) => (
                             <button
                                 key={item}
                                 type="button"

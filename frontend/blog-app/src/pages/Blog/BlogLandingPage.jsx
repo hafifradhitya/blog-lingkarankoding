@@ -108,11 +108,11 @@ const BlogLandingPage = () => {
                         </span>
 
                         <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight leading-tight">
-                            Eksplorasi Coding & Integrasi Gemini AI
+                            Eksplorasi Dunia Coding & Teknologi Modern
                         </h1>
 
                         <p className="text-sm md:text-base text-sky-100 font-normal leading-relaxed">
-                            Pelajari artikel praktis seputar Web Development, Node.js, React, arsitektur backend scalable, dan integrasi Artificial Intelligence generasi terbaru.
+                            Pelajari artikel dan tutorial praktis seputar Web Development, Frontend, Backend, arsitektur sistem modern, serta tren teknologi terkini.
                         </p>
 
                         {/* Search Input Bar in Hero */}
