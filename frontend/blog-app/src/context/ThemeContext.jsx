@@ -10,14 +10,13 @@ const ThemeContext = createContext({
 export const ThemeProvider = ({ children }) => {
     const [theme, setTheme] = useState(() => {
         if (typeof window !== "undefined") {
-            const savedTheme = localStorage.getItem("theme");
-            if (savedTheme === "light" || savedTheme === "dark") {
-                return savedTheme;
-            }
-            if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-                return "dark";
+            // Cek apakah pengguna pernah sengaja mengganti tema lewat tombol toggle
+            const explicitChoice = localStorage.getItem("theme_user_chosen");
+            if (explicitChoice === "light" || explicitChoice === "dark") {
+                return explicitChoice;
             }
         }
+        // Default selalu light mode untuk semua perangkat (laptop, hp, tablet)
         return "light";
     });
 
@@ -28,15 +27,19 @@ export const ThemeProvider = ({ children }) => {
         } else {
             root.classList.remove("dark");
         }
-        try {
-            localStorage.setItem("theme", theme);
-        } catch (e) {
-            console.error("Failed to persist theme to localStorage", e);
-        }
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
+        setTheme((prevTheme) => {
+            const nextTheme = prevTheme === "dark" ? "light" : "dark";
+            try {
+                localStorage.setItem("theme_user_chosen", nextTheme);
+                localStorage.setItem("theme", nextTheme);
+            } catch (e) {
+                console.error("Failed to persist theme to localStorage", e);
+            }
+            return nextTheme;
+        });
     };
 
     const isDarkMode = theme === "dark";
