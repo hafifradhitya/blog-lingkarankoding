@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LuHeart, LuBookmark, LuEye, LuClock } from "react-icons/lu";
-import { formatDate, calculateReadingTime, sanitizeExcerpt } from "../../utils/helper";
+import { formatDate, calculateReadingTime, sanitizeExcerpt, getValidImageUrl } from "../../utils/helper";
 import CharAvatar from "./CharAvatar";
 import { useUser } from "../../context/userContext";
 import axiosInstance from "../../utils/axiosInstance";
@@ -88,9 +88,12 @@ const BlogPostCard = ({ post }) => {
                 <Link to={`/${post.slug}`} className="block relative aspect-16/9 overflow-hidden bg-slate-100 dark:bg-slate-800">
                     {post.coverImageUrl ? (
                         <img
-                            src={post.coverImageUrl}
+                            src={getValidImageUrl(post.coverImageUrl)}
                             alt={post.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                            }}
                         />
                     ) : (
                         <div className="w-full h-full bg-linear-to-br from-sky-500 to-cyan-600 flex items-center justify-center p-6 text-white text-center">
@@ -151,9 +154,12 @@ const BlogPostCard = ({ post }) => {
                 <div className="flex items-center gap-2.5">
                     {post.author?.profileImageUrl ? (
                         <img
-                            src={post.author.profileImageUrl}
+                            src={getValidImageUrl(post.author.profileImageUrl)}
                             alt={post.author.name}
                             className="w-7 h-7 rounded-full object-cover"
+                            onError={(e) => {
+                                e.currentTarget.style.display = "none";
+                            }}
                         />
                     ) : (
                         <CharAvatar

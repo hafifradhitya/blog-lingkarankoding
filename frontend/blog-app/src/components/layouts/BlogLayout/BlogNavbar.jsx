@@ -12,6 +12,7 @@ import SideMenu from "../SideMenu";
 import ThemeToggle from "../../Common/ThemeToggle";
 import axiosInstance from "../../../utils/axiosInstance";
 import { API_PATHS } from "../../../utils/apiPaths";
+import { getValidImageUrl } from "../../../utils/helper";
 
 const BlogNavbar = ({ activeMenu }) => {
     const { user, isAuthenticated, isAdmin, logout } = useUser();
@@ -263,9 +264,12 @@ const BlogNavbar = ({ activeMenu }) => {
                                 >
                                     {user.profileImageUrl ? (
                                         <img
-                                            src={user.profileImageUrl}
+                                            src={getValidImageUrl(user.profileImageUrl)}
                                             alt={user.name}
                                             className="w-8 h-8 rounded-full object-cover"
+                                            onError={(e) => {
+                                                e.currentTarget.style.display = "none";
+                                            }}
                                         />
                                     ) : (
                                         <CharAvatar

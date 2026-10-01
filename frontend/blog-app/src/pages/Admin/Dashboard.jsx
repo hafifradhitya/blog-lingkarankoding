@@ -5,7 +5,7 @@ import CharAvatar from "../../components/Cards/CharAvatar";
 import { MetricCardSkeleton, TableSkeleton } from "../../components/Common/SkeletonLoader";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { formatDate } from "../../utils/helper";
+import { formatDate, getValidImageUrl } from "../../utils/helper";
 import {
     LuFileText,
     LuEye,
@@ -369,9 +369,12 @@ const Dashboard = () => {
                                                     <div className="flex items-center gap-2.5 min-w-0">
                                                         {u.profileImageUrl ? (
                                                             <img
-                                                                src={u.profileImageUrl}
+                                                                src={getValidImageUrl(u.profileImageUrl)}
                                                                 alt={u.name}
                                                                 className="w-7 h-7 rounded-full object-cover shrink-0"
+                                                                onError={(e) => {
+                                                                    e.currentTarget.style.display = "none";
+                                                                }}
                                                             />
                                                         ) : (
                                                             <CharAvatar

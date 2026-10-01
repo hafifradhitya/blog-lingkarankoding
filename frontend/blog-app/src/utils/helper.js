@@ -44,3 +44,17 @@ export const sanitizeExcerpt = (text, maxLength = 120) => {
     if (cleaned.length <= maxLength) return cleaned;
     return cleaned.slice(0, maxLength) + "...";
 };
+
+export const getValidImageUrl = (url) => {
+    if (!url || typeof url !== "string") return "";
+    // Normalisasi jika masih ada URL localhost dari database lokal lama
+    if (url.includes("localhost:8000/uploads/")) {
+        return `/uploads/${url.split("localhost:8000/uploads/")[1]}`;
+    }
+    // Jika backend URL domain /uploads/, arahkan ke public frontend agar super cepat via CDN Vercel
+    if (url.includes("/uploads/")) {
+        const parts = url.split("/uploads/");
+        return `/uploads/${parts[1]}`;
+    }
+    return url;
+};

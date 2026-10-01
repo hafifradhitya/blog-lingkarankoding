@@ -8,7 +8,7 @@ import { DetailSkeleton } from "../../components/Common/SkeletonLoader";
 import { useUser } from "../../context/userContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { formatDate, calculateReadingTime } from "../../utils/helper";
+import { formatDate, calculateReadingTime, getValidImageUrl } from "../../utils/helper";
 import toast from "react-hot-toast";
 import {
     LuHeart,
@@ -222,9 +222,12 @@ const BlogPostView = () => {
                         <div className="flex items-center gap-3.5">
                             {post.author?.profileImageUrl ? (
                                 <img
-                                    src={post.author.profileImageUrl}
+                                    src={getValidImageUrl(post.author.profileImageUrl)}
                                     alt={post.author.name}
                                     className="w-11 h-11 rounded-full object-cover border border-gray-200 dark:border-slate-700"
+                                    onError={(e) => {
+                                        e.currentTarget.style.display = "none";
+                                    }}
                                 />
                             ) : (
                                 <CharAvatar
@@ -325,9 +328,12 @@ const BlogPostView = () => {
                     {post.coverImageUrl && (
                         <div className="relative rounded-3xl overflow-hidden shadow-lg border border-gray-100 dark:border-slate-800">
                             <img
-                                src={post.coverImageUrl}
+                                src={getValidImageUrl(post.coverImageUrl)}
                                 alt={post.title}
                                 className="w-full h-auto max-h-[500px] object-cover"
+                                onError={(e) => {
+                                    e.currentTarget.style.display = "none";
+                                }}
                             />
                         </div>
                     )}
@@ -373,9 +379,12 @@ const BlogPostView = () => {
                     <div className="bg-linear-to-r from-sky-50 to-indigo-50/40 dark:from-slate-900 dark:to-slate-900/60 rounded-3xl p-6 md:p-8 border border-sky-100/70 dark:border-slate-800 flex items-center gap-5 flex-col sm:flex-row text-center sm:text-left transition-colors">
                         {post.author?.profileImageUrl ? (
                             <img
-                                src={post.author.profileImageUrl}
+                                src={getValidImageUrl(post.author.profileImageUrl)}
                                 alt={post.author.name}
                                 className="w-16 h-16 rounded-full object-cover border-2 border-white dark:border-slate-700 shadow-xs shrink-0"
+                                onError={(e) => {
+                                    e.currentTarget.style.display = "none";
+                                }}
                             />
                         ) : (
                             <CharAvatar

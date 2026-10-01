@@ -3,6 +3,7 @@ import { LuLogOut, LuTag } from "react-icons/lu";
 import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { useUser } from "../../context/userContext";
 import CharAvatar from "../Cards/CharAvatar";
+import { getValidImageUrl } from "../../utils/helper";
 import ThemeToggle from "../Common/ThemeToggle";
 import LogoBlack from "../../assets/logo-black.png";
 import LogoWhite from "../../assets/logo-white.png";
@@ -76,9 +77,12 @@ const SideMenu = ({ activeMenu, isBlogMenu, customCategories, onClose }) => {
                     <div className="flex flex-col items-center justify-center gap-1 mt-1 mb-4 pb-3 border-b border-gray-100 dark:border-slate-800 shrink-0">
                         {user?.profileImageUrl ? (
                             <img
-                                src={user.profileImageUrl}
+                                src={getValidImageUrl(user.profileImageUrl)}
                                 alt="Profile"
                                 className="w-14 h-14 rounded-full object-cover shadow-xs border border-gray-200 dark:border-slate-700"
+                                onError={(e) => {
+                                    e.currentTarget.style.display = "none";
+                                }}
                             />
                         ) : (
                             <CharAvatar

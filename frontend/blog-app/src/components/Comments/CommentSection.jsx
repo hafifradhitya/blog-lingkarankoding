@@ -3,6 +3,7 @@ import { LuMessageSquare, LuSend } from "react-icons/lu";
 import CommentItem from "./CommentItem";
 import CharAvatar from "../Cards/CharAvatar";
 import { CommentSkeleton } from "../Common/SkeletonLoader";
+import { getValidImageUrl } from "../../utils/helper";
 import { useUser } from "../../context/userContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -137,9 +138,12 @@ const CommentSection = ({ postId, postAuthorId }) => {
                     <div className="flex items-center gap-3">
                         {user.profileImageUrl ? (
                             <img
-                                src={user.profileImageUrl}
+                                src={getValidImageUrl(user.profileImageUrl)}
                                 alt={user.name}
                                 className="w-8 h-8 rounded-full object-cover"
+                                onError={(e) => {
+                                    e.currentTarget.style.display = "none";
+                                }}
                             />
                         ) : (
                             <CharAvatar

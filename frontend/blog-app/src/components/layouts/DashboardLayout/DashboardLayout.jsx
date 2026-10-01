@@ -8,6 +8,7 @@ import ThemeToggle from "../../Common/ThemeToggle";
 import { useUser } from "../../../context/userContext";
 import LogoBlack from "../../../assets/logo-black.png";
 import LogoWhite from "../../../assets/logo-white.png";
+import { getValidImageUrl } from "../../../utils/helper";
 
 const DashboardLayout = ({ children, activeMenu }) => {
     const { user, logout } = useUser();
@@ -81,9 +82,12 @@ const DashboardLayout = ({ children, activeMenu }) => {
                                 >
                                     {user.profileImageUrl ? (
                                         <img
-                                            src={user.profileImageUrl}
+                                            src={getValidImageUrl(user.profileImageUrl)}
                                             alt={user.name}
                                             className="w-8 h-8 rounded-full object-cover"
+                                            onError={(e) => {
+                                                e.currentTarget.style.display = "none";
+                                            }}
                                         />
                                     ) : (
                                         <CharAvatar

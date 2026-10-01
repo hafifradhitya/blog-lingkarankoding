@@ -23,7 +23,7 @@ import CharAvatar from "../../components/Cards/CharAvatar";
 import BlogPostCard from "../../components/Cards/BlogPostCard";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { formatDate } from "../../utils/helper";
+import { formatDate, getValidImageUrl } from "../../utils/helper";
 import toast from "react-hot-toast";
 
 const UserDashboard = () => {
@@ -215,9 +215,12 @@ const UserDashboard = () => {
                         <div className="flex items-center gap-4 md:gap-6">
                             {user?.profileImageUrl ? (
                                 <img
-                                    src={user.profileImageUrl}
+                                    src={getValidImageUrl(user.profileImageUrl)}
                                     alt={user.name}
                                     className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover shadow-md border-2 border-white dark:border-slate-800 ring-2 ring-sky-500/30"
+                                    onError={(e) => {
+                                        e.currentTarget.style.display = "none";
+                                    }}
                                 />
                             ) : (
                                 <div className="ring-2 ring-sky-500/30 rounded-2xl overflow-hidden shadow-md">

@@ -53,8 +53,13 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const os = require("os");
+
 // Serve uploads folder statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+if (process.env.VERCEL) {
+    app.use("/uploads", express.static(path.join(os.tmpdir(), "uploads")));
+}
 
 // Root and Health Check Routes
 app.get("/", (req, res) => {

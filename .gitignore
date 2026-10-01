@@ -16,7 +16,7 @@ dist/
 dist-ssr/
 
 # Uploaded media & user files
-backend/uploads/*
+# backend/uploads/*
 !backend/uploads/.gitkeep
 
 # Logs & debugging

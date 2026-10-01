@@ -8,6 +8,7 @@ import { useTheme } from "../../context/ThemeContext";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import uploadImage from "../../utils/uploadImage";
+import { getValidImageUrl } from "../../utils/helper";
 import toast from "react-hot-toast";
 import {
     LuArrowLeft,
@@ -431,9 +432,12 @@ const BlogPostEditor = ({ isEdit: isEditProp }) => {
                                 {coverImageUrl ? (
                                     <div className="relative rounded-xl overflow-hidden border border-gray-200 dark:border-slate-700 group aspect-16/9 bg-slate-100 dark:bg-slate-800">
                                         <img
-                                            src={coverImageUrl}
+                                            src={getValidImageUrl(coverImageUrl)}
                                             alt="Cover Preview"
                                             className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                e.currentTarget.style.display = "none";
+                                            }}
                                         />
                                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                                             <button

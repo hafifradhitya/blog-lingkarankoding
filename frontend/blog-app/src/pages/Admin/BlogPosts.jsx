@@ -4,7 +4,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout/DashboardL
 import { TableSkeleton } from "../../components/Common/SkeletonLoader";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { formatDate } from "../../utils/helper";
+import { formatDate, getValidImageUrl } from "../../utils/helper";
 import toast from "react-hot-toast";
 import {
     LuPlus,
@@ -318,9 +318,12 @@ const BlogPosts = () => {
                                                 <div className="flex items-center gap-3">
                                                     {post.coverImageUrl ? (
                                                         <img
-                                                            src={post.coverImageUrl}
+                                                            src={getValidImageUrl(post.coverImageUrl)}
                                                             alt={post.title}
                                                             className="w-12 h-9 rounded-lg object-cover border border-gray-200 dark:border-slate-700 shrink-0"
+                                                            onError={(e) => {
+                                                                e.currentTarget.style.display = "none";
+                                                            }}
                                                         />
                                                     ) : (
                                                         <div className="w-12 h-9 rounded-lg bg-sky-50 dark:bg-sky-950/80 text-sky-600 dark:text-sky-400 flex items-center justify-center text-xs shrink-0 font-bold border border-sky-100 dark:border-sky-800/60">

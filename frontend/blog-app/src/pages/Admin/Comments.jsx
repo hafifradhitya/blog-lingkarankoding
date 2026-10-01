@@ -5,7 +5,7 @@ import CharAvatar from "../../components/Cards/CharAvatar";
 import { TableSkeleton } from "../../components/Common/SkeletonLoader";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
-import { formatDate } from "../../utils/helper";
+import { formatDate, getValidImageUrl } from "../../utils/helper";
 import toast from "react-hot-toast";
 import {
     LuSearch,
@@ -214,9 +214,12 @@ const Comments = () => {
                                                 <div className="flex items-center gap-2.5">
                                                     {comment.author?.profileImageUrl ? (
                                                         <img
-                                                            src={comment.author.profileImageUrl}
+                                                            src={getValidImageUrl(comment.author.profileImageUrl)}
                                                             alt={comment.author.name}
                                                             className="w-8 h-8 rounded-full object-cover shrink-0 border border-gray-200 dark:border-slate-700"
+                                                            onError={(e) => {
+                                                                e.currentTarget.style.display = "none";
+                                                            }}
                                                         />
                                                     ) : (
                                                         <CharAvatar

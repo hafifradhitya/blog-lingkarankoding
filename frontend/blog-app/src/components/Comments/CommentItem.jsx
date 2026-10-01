@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LuReply, LuTrash2, LuCornerDownRight, LuSend } from "react-icons/lu";
 import CharAvatar from "../Cards/CharAvatar";
-import { formatDate } from "../../utils/helper";
+import { formatDate, getValidImageUrl } from "../../utils/helper";
 import { useUser } from "../../context/userContext";
 
 const CommentItem = ({
@@ -44,9 +44,12 @@ const CommentItem = ({
                     <div className="flex items-center gap-3">
                         {comment.author?.profileImageUrl ? (
                             <img
-                                src={comment.author.profileImageUrl}
+                                src={getValidImageUrl(comment.author.profileImageUrl)}
                                 alt={comment.author.name}
                                 className="w-8 h-8 rounded-full object-cover"
+                                onError={(e) => {
+                                    e.currentTarget.style.display = "none";
+                                }}
                             />
                         ) : (
                             <CharAvatar
@@ -171,9 +174,12 @@ const CommentItem = ({
                                         <LuCornerDownRight className="text-sky-400 text-xs shrink-0" />
                                         {reply.author?.profileImageUrl ? (
                                             <img
-                                                src={reply.author.profileImageUrl}
+                                                src={getValidImageUrl(reply.author.profileImageUrl)}
                                                 alt={reply.author.name}
                                                 className="w-6 h-6 rounded-full object-cover"
+                                                onError={(e) => {
+                                                    e.currentTarget.style.display = "none";
+                                                }}
                                             />
                                         ) : (
                                             <CharAvatar
